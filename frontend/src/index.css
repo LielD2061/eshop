@@ -16,5 +16,28 @@ header a {
   color: #ffffff;
   font-weight: bold;
   text-decoration: none;
-  
+}
+
+main {
+  padding: 1rem;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.prod {
+  border: 1px #404040 solid;
+  margin: 1rem;
+}
+
+.prod img {
+  width: 100%;
+  max-width: 400px;
+}
+
+.prod-desc {
+  padding: 1rem;
 }
