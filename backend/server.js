@@ -9,9 +9,17 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-app.use('/api/v1/seed', seedRoutes);
 
 app.use(cors());
+app.use('/api/v1/seed', seedRoutes);
+app.use('/api/v1/product/token/:token', async (req, res) => {
+	const product = await data.products.find((x) => x.token === req.params.token);
+	if (product) {
+		res.send(product);
+	} else {
+		res.status(404).send({ message: 'Product was not found' });
+	}
+});
 
 //Endpoints
 app.get('/api/v1/products', (req, res) => {
@@ -21,7 +29,7 @@ app.get('/api/v1/products', (req, res) => {
 mongoose
 	.connect(process.env.MONGODB_URI)
 	.then(() => {
-		console.log(`connected on port ${PORT}`)
+		console.log(`connected on port ${PORT}`);
 		app.listen(PORT, () => {
 			console.log(`I am listaning on port ${PORT}`);
 		});

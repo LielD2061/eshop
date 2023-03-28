@@ -1,5 +1,8 @@
 import { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Product from '../components/product';
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -45,22 +48,13 @@ function HomePage() {
 				) : error ? (
 					<h1>{error}</h1>
 				) : (
-					products.map((prod) => (
-						<div key={prod.token} className='prod'>
-							<a href={`/product/${prod.token}`}>
-								<img src={prod.image} alt={prod.name}></img>
-							</a>
-							<div className='prod-desc'>
-								<a href={`/product/${prod.token}`}>
-									<p>{prod.name}</p>
-								</a>
-								<p>
-									<strong>{prod.price}$</strong>
-								</p>
-								<button>Add to Cart</button>
-							</div>
-						</div>
-					))
+					<Row>
+						{products.map((prod) => (
+							<Col  key={prod.token} lg={3} md={4} sm={6} className='mb-3'>
+								<Product prod={prod} />
+							</Col>
+						))}
+					</Row>
 				)}
 			</div>
 		</div>
