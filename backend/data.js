@@ -28,7 +28,7 @@ const data = {
         name: 'productCName',
         description: '',
         category: 'Pharma',
-        price: 80,
+        price: 800,
         token: 'productC-Token',
         brand: 'Teva',
         countinstock: 9,
