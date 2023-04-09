@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
@@ -29,6 +29,7 @@ const reducer = (state, action) => {
 };
 
 function ProductPage() {
+  const navigate = useNavigate();
   const params = useParams();
   const { token } = params;
 
@@ -65,6 +66,7 @@ function ProductPage() {
       return;
     }
     cxtDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
+    navigate("/cart");
   };
 
   return (
@@ -127,7 +129,6 @@ function ProductPage() {
                         </Col>
                       </Row>
                     </ListGroup.Item>
-
                     {product.countinstock > 0 && (
                       <ListGroup.Item>
                         <div className='d-grid'>
