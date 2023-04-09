@@ -21,6 +21,15 @@ app.use("/api/v1/product/token/:token", async (req, res) => {
   }
 });
 
+app.use("/api/v1/product/:id", async (req, res) => {
+  const product = await data.products.find((x) => x._id === req.params._id);
+  if (product) {
+    res.send(product);
+  } else {
+    res.status(404).send({ message: "Product was not found" });
+  }
+});
+
 //Endpoints
 app.get("/api/v1/products", (req, res) => {
   res.send(data.products);

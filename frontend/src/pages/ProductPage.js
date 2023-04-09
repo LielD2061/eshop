@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useReducer } from "react";
 import axios from "axios";
@@ -6,12 +6,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import Rating from "../components/rating";
 import { Helmet } from "react-helmet-async";
 import Loading from "../components/loading";
 import MessageBox from "../components/messageBox";
 import { getError } from "../utils";
+import Badge from "react-bootstrap/Badge";
+import { Store } from "../store";
+import Button from "react-bootstrap/Button";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -51,6 +53,19 @@ function ProductPage() {
     getProd();
   }, [token]);
 
+  const { state, dispatch: cxtDispatch } = useContext(Store);
+  const { cart } = state;
+
+  const addToCartHandler = async () => {
+    const existItem = cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/api/v1/products/${product._id}`);
+    if (data.countInStock < quantity)
+    {window.alert('Sorry. Product is out of stock');
+    return;}
+    cxtDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity: 1 } });
+  };
+
   return (
     <div>
       {loading ? (
@@ -62,10 +77,10 @@ function ProductPage() {
           <Row>
             <Col md={6}>
               <img
-                className='img-large'
                 src={product.image}
                 alt={product.name}
-              ></img>
+                className='img-large'
+              />
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
@@ -82,10 +97,49 @@ function ProductPage() {
                   ></Rating>
                 </ListGroup.Item>
                 <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+
+                <ListGroup.Item>
+                  Description:
+                  <p>{product.description}</p>
+                </ListGroup.Item>
               </ListGroup>
-              s
             </Col>
-            <Col md={3}></Col>
+            <Col md={3}>
+              <Card>
+                <Card.Body>
+                  <ListGroup variant='flush'>
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Price:</Col>
+                        <Col>${product.price}</Col>
+                      </Row>
+                    </ListGroup.Item>
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Status:</Col>
+                        <Col>
+                          {product.countinstock > 0 ? (
+                            <Badge bg='success'>In Stock</Badge>
+                          ) : (
+                            <Badge bg='danger'>Unavailable</Badge>
+                          )}
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+
+                    {product.countinstock > 0 && (
+                      <ListGroup.Item>
+                        <div className='d-grid'>
+                          <Button onClick={addToCartHandler} variant='primary'>
+                            Add to Cart
+                          </Button>
+                        </div>
+                      </ListGroup.Item>
+                    )}
+                  </ListGroup>
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
         </div>
       )}
