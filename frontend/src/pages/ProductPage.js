@@ -60,10 +60,11 @@ function ProductPage() {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/v1/products/${product._id}`);
-    if (data.countInStock < quantity)
-    {window.alert('Sorry. Product is out of stock');
-    return;}
-    cxtDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity: 1 } });
+    if (data.countinstock < quantity) {
+      window.alert("Sorry. Product is out of stock");
+      return;
+    }
+    cxtDispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
   };
 
   return (
