@@ -14,7 +14,6 @@ function Product(props) {
   } = state;
 
   const addToCartHandler = async (item) => {
-    debugger;
     const existItem = cartItems.find((x) => x._id === item._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/v1/products/${item._id}`);
@@ -27,8 +26,6 @@ function Product(props) {
       payload: { ...item, quantity },
     });
   };
-
-  console.log(prod);
 
   return (
     <Card className='product-card'>

@@ -1,7 +1,16 @@
+import bcrypt from 'bcryptjs'
+
 const data = {
+  users: [
+    {
+      name: "Admin",
+      email: "admin@example.com",
+      password: bcrypt.hashSync('12345')
+    }
+  ],
   products: [
     {
-      _id: 1,
+      // _id: 1,
       name: "productAName",
       description: "",
       category: "Pharma",
@@ -14,7 +23,7 @@ const data = {
       image: "/images/beautycare.jpeg",
     },
     {
-      _id: 2,
+      //_id: 2,
       name: "productBName",
       description: "",
       category: "Pharma",
@@ -27,7 +36,7 @@ const data = {
       image: "/images/bosil.jpeg",
     },
     {
-      _id: 3,
+      //_id: 3,
       name: "productCName",
       description: "",
       category: "Pharma",
@@ -40,7 +49,7 @@ const data = {
       image: "/images/megaglu.jpeg",
     },
     {
-      _id: 4,
+      //_id: 4,
       name: "productDName",
       description: "",
       category: "Pharma",
@@ -54,7 +63,7 @@ const data = {
     },
 
     {
-      _id: 5,
+      //_id: 5,
       name: "productEName",
       description: "",
       category: "Pharma",
@@ -67,7 +76,7 @@ const data = {
       image: "/images/beautycare.jpeg",
     },
     {
-      _id: 6,
+      //_id: 6,
       name: "productFName",
       description: "",
       category: "Pharma",
@@ -80,7 +89,7 @@ const data = {
       image: "/images/bosil.jpeg",
     },
     {
-      _id: 7,
+      //_id: 7,
       name: "productGName",
       description: "",
       category: "Pharma",
@@ -93,7 +102,7 @@ const data = {
       image: "/images/megaglu.jpeg",
     },
     {
-      _id: 8,
+      //_id: 8,
       name: "productHName",
       description: "",
       category: "Pharma",

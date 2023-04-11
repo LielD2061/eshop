@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -35,6 +35,7 @@ function HomePage() {
       try {
         const res = await axios.get("/api/v1/products");
         dispatch({ type: "GET_SUCCESS", payload: res.data });
+        console.log(res.data)
       } catch (err) {
         dispatch({ type: "GET_FAILED", payload: getError(err) });
       }
